@@ -18,6 +18,6 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build the SnipeIt Docker image
-      run: docker build -t kamencho/snipeit . --file ./app/dockerfiles/Dockerfile 
+      run: docker build -t kamencho/snipeit ./app/dockerfiles --file ./app/dockerfiles/Dockerfile 
     - name: Push the new image to Docker Hub
       run: docker push kamencho/snipeit:tagname
