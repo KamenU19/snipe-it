@@ -1,4 +1,3 @@
-
 FROM snipe/snipe-it:v6.0.11
 
 COPY final.sh .
