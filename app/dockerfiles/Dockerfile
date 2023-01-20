@@ -2,7 +2,7 @@
 FROM snipe/snipe-it:v6.0.11
 
 COPY final.sh .
-RUN sudo chmod +x ./app/dockerfiles/final.sh
+RUN chmod +x final.sh
 
 
 ENTRYPOINT ["sh", "/var/www/html/final.sh"]
