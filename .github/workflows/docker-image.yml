@@ -3,6 +3,8 @@ name: Docker Image CI
 on:
   push:
     branches: [ "master" ]
+    paths: 
+      - 'app/dockerfiles/**'
   pull_request:
     branches: [ "change-test" ]
 
