@@ -2,9 +2,9 @@ name: "Deploy The Infrastucture and App"
 on:
   push:
     branches:
-      - main
+      - master
     paths:
-      - 'infrastructure/**'
+      - 'Infrastructure/**'
   pull_request:
 env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -16,7 +16,6 @@ env:
 jobs:
 # JOB TO DEPLOY THE INFRASTRUCUTURE
   deploy-infrastucture:
-    needs: start-ec2
     runs-on: ubuntu-latest
     continue-on-error: true
     env:
@@ -31,7 +30,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./infrastructure
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
@@ -76,4 +74,3 @@ jobs:
           AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve
-
