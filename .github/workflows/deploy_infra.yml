@@ -95,8 +95,8 @@ jobs:
       #  run: ssh-keyscan -H ${{ env.ip_address }} >> ~/.ssh/known_hosts
 
       - name: Change permisions 
-        run: sudo chown ubuntu:ubuntu Kamen.pem
+        run: sudo chown ubuntu:ubuntu /home/ubuntu/Kamen.pem
 
       - name: Run Script to deploy
         run: |
-           cat ../infrastructure/Modules/EC2/script.sh | ssh -i Kamen.pem ubuntu@${{ env.ip_address }}
+           cat ../infrastructure/Modules/EC2/script.sh | ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }}
