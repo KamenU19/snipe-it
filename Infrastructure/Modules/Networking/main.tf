@@ -85,6 +85,7 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_security_group" "snipeit" {
+  vpc_id = data.aws_vpc.snipeitvpc.id
   name = "snipeit"
 }
 
