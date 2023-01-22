@@ -1,9 +1,9 @@
 /*Reading data of the existing VPC*/
-data "aws_vpc" "SnipeIT VPC" {
+data "aws_vpc" "snipeitvpc" {
   
   filter {
     name = "tag:Name"
-    values = ["SnipeIT VPC"]
+    values = ["snipeitvpc"]
   }
 }
 
@@ -11,7 +11,7 @@ data "aws_vpc" "SnipeIT VPC" {
 /* Internet gateway for the public subnet */
 
 resource "aws_internet_gateway" "ig" {
-    vpc_id = data.aws_vpc.SnipeIT VPC.id
+    vpc_id = data.aws_vpc.snipeitvpc.id
     tags = {
         Name = "${var.environment}-igw"
         Environment = var.environment
