@@ -24,3 +24,11 @@ variable "private_subnets_cidr" {
   description = "CIDR block for Private Subnet"
   default     = ["10.0.10.0/24", "10.0.11.0/24" ,"10.0.12.0/24"]
 }
+
+variable "ami" {
+    default = "ami-0333305f9719618c7"
+}
+
+variable "ec2_instance_type" {
+  default = "t2.micro"
+}

@@ -17,6 +17,12 @@ module "Networking" {
 
 }
 
-
+module "EC2" {
+    source = "./modules/EC2"
+    ami = var.ami
+    ec2_instance_type = var.ec2_instance_type
+    sec_groups = module.Networking.security_groups_ids
+    subnets_id = module.Networking.public_subnets_id[0]
+}
 ##
 ##
