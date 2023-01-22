@@ -95,7 +95,7 @@ resource "aws_security_group_rule" "public-secure-internet-ingress" {
   to_port           = 443
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = data.aws_security_group.snipeit.id
+  security_group_id = aws_security_group.snipeit.id
 }
 
 resource "aws_security_group_rule" "public-secure-internet-egress" {
@@ -104,7 +104,7 @@ resource "aws_security_group_rule" "public-secure-internet-egress" {
   to_port           = 443
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = data.aws_security_group.snipeit.id
+  security_group_id = aws_security_group.snipeit.id
 }
 
 #-----Allow 80 port
@@ -114,7 +114,7 @@ resource "aws_security_group_rule" "public-non-secure-internet-ingress" {
   to_port           = 80
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = data.aws_security_group.snipeit.id
+  security_group_id = aws_security_group.snipeit.id
 }
 
 resource "aws_security_group_rule" "public-non-secure-internet-egress" {
@@ -123,7 +123,7 @@ resource "aws_security_group_rule" "public-non-secure-internet-egress" {
   to_port           = 80
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = data.aws_security_group.snipeit.id
+  security_group_id = aws_security_group.snipeit.id
 }
 
 #----- allow database 3306 port
@@ -134,7 +134,7 @@ resource "aws_security_group_rule" "database-ingress" {
   to_port           = 3306
   protocol          = "tcp"
   cidr_blocks       = ["10.0.0.0/16"]
-  security_group_id = data.aws_security_group.snipeit.id
+  security_group_id = aws_security_group.snipeit.id
 }
 
 resource "aws_security_group_rule" "database-egress" {
@@ -143,7 +143,7 @@ resource "aws_security_group_rule" "database-egress" {
   to_port           = 3306
   protocol          = "tcp"
   cidr_blocks       = ["10.0.0.0/16"]
-  security_group_id = data.aws_security_group.snipeit.id
+  security_group_id = aws_security_group.snipeit.id
 }
 
 #----- allow home ip
@@ -154,7 +154,7 @@ resource "aws_security_group_rule" "ssh-home-ingress" {
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = ["37.143.213.101/32"]
-  security_group_id = data.aws_security_group.snipeit.id
+  security_group_id = aws_security_group.snipeit.id
 }
 
 resource "aws_security_group_rule" "ssh-home-egress" {
@@ -163,5 +163,5 @@ resource "aws_security_group_rule" "ssh-home-egress" {
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = ["37.143.213.101/32"]
-  security_group_id = data.aws_security_group.snipeit.id
+  security_group_id = aws_security_group.snipeit.id
 }
