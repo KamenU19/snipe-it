@@ -24,5 +24,13 @@ module "EC2" {
     sec_groups = module.Networking.security_groups_ids
     subnets_id = module.Networking.public_subnets_id[0]
 }
+
+module "ALB" {
+  source = "./Modules/ALB"
+  subnets_id = flatten(module.Networking.public_subnets_id)
+  sec_groups = module.Networking.security_groups_ids
+  alb_target_group_vpc_id = module.Networking.vpc_id
+  alb_ec2_instance_id = module.EC2.aws_instance_id
+}
 ##
 ##
