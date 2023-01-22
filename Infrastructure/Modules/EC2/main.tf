@@ -5,5 +5,5 @@ resource "aws_instance" "snipeitserver" {
   instance_type = var.ec2_instance_type
   subnet_id = var.subnets_id[0]
   vpc_security_group_ids = var.sec_groups
-  user_data = "${data.template_file.script.rendered}"
+  user_data = "${file('script.sh')}"
   }
