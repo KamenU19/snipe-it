@@ -30,6 +30,7 @@ jobs:
     defaults:
       run:
         shell: bash
+        working-directory: ./Infrastructure
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
