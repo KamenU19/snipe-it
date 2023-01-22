@@ -44,7 +44,7 @@ module "githubrunner" {
 module "S3" {
   source        = "./Modules/S3"
   bucket-name   = var.bucket
-  env_name      = var.environment
+  environment     = var.environment
   region        = var.region
   force_destroy = false
 }
