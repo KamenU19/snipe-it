@@ -167,7 +167,7 @@ resource "aws_security_group_rule" "ssh-home-egress" {
   security_group_id = aws_security_group.snipeit.id
 }
 
-resource "aws_security_group_rule" "ssh-home-ingress" {
+resource "aws_security_group_rule" "ssh-internal-ingress" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
@@ -176,7 +176,7 @@ resource "aws_security_group_rule" "ssh-home-ingress" {
   security_group_id = aws_security_group.snipeit.id
 }
 
-resource "aws_security_group_rule" "ssh-home-egress" {
+resource "aws_security_group_rule" "ssh-internal-egress" {
   type              = "egress"
   from_port         = 22
   to_port           = 22
