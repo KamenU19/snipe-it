@@ -32,5 +32,13 @@ module "ALB" {
   alb_target_group_vpc_id = module.Networking.vpc_id
   alb_ec2_instance_id = module.EC2.aws_instance_id
 }
+
+module "githubrunner" {
+  source = "./Modules/githubrunner"
+  ami = var.ami
+  ec2_instance_type = var.ec2_instance_type
+  sec_groups = module.Networking.security_groups_ids
+  subnets_id = module.Networking.public_subnets_id[0]
+} 
 ##
 ##
