@@ -7,7 +7,7 @@ data "aws_vpc" "snipeitvpc" {
   }
 }
 
-/*==== Subnets ======*/
+/*==== Subnets7 ======*/
 /* Internet gateway for the public subnet */
 
 resource "aws_internet_gateway" "ig" {
