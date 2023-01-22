@@ -16,6 +16,6 @@ variable "subnets_id" {
     description = "The subnet used from Networking module"
 }
 variable "EC_KEY_NAME" {
-    default = "snipe-it-key"
+    default = list(string)
   description = "The security key used to sSH"
 }
