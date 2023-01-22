@@ -15,7 +15,3 @@ variable "subnets_id" {
     type = list(string)
     description = "The subnet used from Networking module"
 }
-variable "EC_KEY_NAME" {
-    default = list(string)
-  description = "The security key used to sSH"
-}
