@@ -166,3 +166,21 @@ resource "aws_security_group_rule" "ssh-home-egress" {
   cidr_blocks       = ["37.143.213.101/32"]
   security_group_id = aws_security_group.snipeit.id
 }
+
+resource "aws_security_group_rule" "ssh-home-ingress" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["10.0.0.0/16"]
+  security_group_id = aws_security_group.snipeit.id
+}
+
+resource "aws_security_group_rule" "ssh-home-egress" {
+  type              = "egress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["10.0.0.0/16"]
+  security_group_id = aws_security_group.snipeit.id
+}
