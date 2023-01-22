@@ -99,4 +99,4 @@ jobs:
 
       - name: Run Script to deploy
         run: |
-           cat ../infrastructure/Modules/EC2/script.sh | ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }}
+           cat ../Infrastructure/Modules/EC2/script.sh | ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }}
