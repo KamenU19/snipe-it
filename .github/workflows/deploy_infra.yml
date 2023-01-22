@@ -75,3 +75,28 @@ jobs:
           AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
           AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }}
         run: terraform apply -auto-approve
+  
+  deploy-instance:
+    needs: deploy-infrastucture
+    runs-on: self-hosted
+    continue-on-error: true
+    defaults:
+          run:
+            shell: bash
+            working-directory: ./app
+        steps:
+          - name: Git checkout
+            uses: actions/checkout@v3
+
+          - name: Get Ip
+            run: echo ip_address=$(aws ec2 describe-instances --region "us-east-1" --filters Name=tag:Name,Values="SnipeIT Server" --output text --query "Reservations[*].Instances[*].PrivateIpAddress") >> $GITHUB_ENV
+
+          - name: Run ssh once
+            run: ssh-keyscan -H ${{ env.ip_address }} >> ~/.ssh/known_hosts
+
+          - name: Change permisions 
+            run: sudo chown ubuntu:ubuntu Kamen.pem
+
+          - name: Run Script to deploy
+            run: |
+              cat ../infrastructure/Scripts/provision_infra.sh | ssh -i Kamen.pem ubuntu@${{ env.ip_address }}
