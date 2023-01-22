@@ -32,3 +32,8 @@ variable "ami" {
 variable "ec2_instance_type" {
   default = "t2.micro"
 }
+
+
+variable "bucket" {
+  description = "S3 bucket for terraform states"
+}

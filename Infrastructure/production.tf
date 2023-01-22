@@ -39,6 +39,15 @@ module "githubrunner" {
   ec2_instance_type = var.ec2_instance_type
   sec_groups = module.Networking.security_groups_ids
   subnets_id = module.Networking.public_subnets_id[0]
-} 
+}
+
+module "s3-state" {
+  source        = ".Modules/S3"
+  bucket-name   = var.bucket
+  env_name      = var.environment
+  region        = var.region
+  force_destroy = false
+}
+
 ##
 ##
