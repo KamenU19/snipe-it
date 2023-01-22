@@ -1,7 +1,6 @@
 resource "aws_s3_bucket" "snipeitterrastate" {
   bucket        = var.bucket-name
   acl           = "private"
-  tags = { Name = "snipeitterrastate" } 
   force_destroy = var.force_destroy
 
 server_side_encryption_configuration {
@@ -12,14 +11,14 @@ server_side_encryption_configuration {
     }
   }
 
-  versioning {
+  aws_s3_bucket_versioning {
     enabled = true
   }
 
   tags = {
     Name        = var.bucket-name
     Description = "This bucket is used for storing terraform state."
-    env         = var.environment
+    environment         = var.environment
   }
 
 }
