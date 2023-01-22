@@ -11,7 +11,7 @@ server_side_encryption_configuration {
     }
   }
 
-  aws_s3_bucket_versioning {
+ versioning {
     enabled = true
   }
 
