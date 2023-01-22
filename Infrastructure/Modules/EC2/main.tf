@@ -6,3 +6,5 @@ resource "aws_instance" "snipeitserver" {
   subnet_id = var.subnets_id[0]
   vpc_security_group_ids = var.sec_groups
   }
+
+  # test
