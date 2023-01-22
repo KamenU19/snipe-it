@@ -1,6 +1,7 @@
 resource "aws_s3_bucket" "snipeitterrastate" {
   bucket        = var.bucket-name
   acl           = "private"
+  tags = { Name = "snipeitterrastate" } 
   force_destroy = var.force_destroy
 
 server_side_encryption_configuration {
@@ -30,9 +31,4 @@ resource "aws_s3_bucket_public_access_block" "example" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
-}
-
-resource "aws_s3_bucket_policy" "snipeitterrastate" {
-  bucket = aws_s3_bucket.snipeitterrastate.id
-  policy = data.aws_iam_policy_document.snipeitterrastate.json
 }
