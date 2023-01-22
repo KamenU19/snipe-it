@@ -7,4 +7,4 @@ resource "aws_instance" "snipeitserver" {
   vpc_security_group_ids = var.sec_groups
   }
 
-  # test3
+  # test4
