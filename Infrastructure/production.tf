@@ -41,7 +41,7 @@ module "githubrunner" {
   subnets_id = module.Networking.public_subnets_id[0]
 }
 
-module "s3-state" {
+module "S3" {
   source        = ".Modules/S3"
   bucket-name   = var.bucket
   env_name      = var.environment
