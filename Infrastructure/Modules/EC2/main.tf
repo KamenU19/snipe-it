@@ -5,3 +5,4 @@ resource "aws_instance" "snipeitserver" {
   subnet_id = var.subnets_id[0]
   key_name = var.EC_KEY_NAME
   vpc_security_group_ids = var.sec_groups
+  }
