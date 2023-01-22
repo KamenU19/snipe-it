@@ -1,4 +1,4 @@
-name: "Deploy The Infrastucture and App"
+name: "Deploy The Infrastucture"
 on:
   push:
     branches:
