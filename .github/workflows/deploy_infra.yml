@@ -82,8 +82,8 @@ jobs:
     continue-on-error: true
     defaults:
       run:
-      shell: bash
-      working-directory: ./app
+        shell: bash
+        working-directory: ./app
       steps:
       - name: Git checkout
         uses: actions/checkout@v3
