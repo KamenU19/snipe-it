@@ -3,7 +3,8 @@ variable "region" {
 }
 
 variable "bucket-name" {
-  type        = string
+  type = string
+  default = "s3terraformsnipestate"
   description = "The bucket to use for storing terrform state files"
 }
 

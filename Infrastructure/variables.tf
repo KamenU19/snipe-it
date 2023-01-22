@@ -35,4 +35,5 @@ variable "ec2_instance_type" {
 
 variable "bucket" {
   description = "S3 bucket for terraform states"
+  default = "s3terraformsnipestate"
 }
