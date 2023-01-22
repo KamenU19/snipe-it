@@ -84,7 +84,7 @@ jobs:
       run:
         shell: bash
         working-directory: ./app
-      steps:
+    steps:
       - name: Git checkout
         uses: actions/checkout@v3
 
