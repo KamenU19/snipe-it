@@ -1,6 +1,6 @@
 #Create the load balancer
 resource "aws_lb" "app" {
-  name               = "snipeitlb"
+  name               = "snipeitalb"
   internal           = false
   load_balancer_type = "application"
   subnets            = var.subnets_id
