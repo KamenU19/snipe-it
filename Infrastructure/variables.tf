@@ -5,7 +5,7 @@ variable "region" {
 
 variable "environment" {
   description = "Deployment Environment"
-  default = "Staging"
+  default = "Snipeit"
 }
 
 variable "vpc_cidr" {
