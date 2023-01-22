@@ -1,7 +1,5 @@
 resource "aws_instance" "runner" {
-    tags { 
-        Name = "Github Runner" 
-        } 
+    tags = { Name = "Github Runner" } 
     ami = var.ami
     instance_type = var.ec2_instance_type
     subnet_id = var.subnets_id[0]
