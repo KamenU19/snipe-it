@@ -14,12 +14,3 @@ variable "subnets_id" {
     type = list(string)
     description = "The subnet used from Networking module"
 }
-variable "EC_KEY_NAME" {
-    default = "snipe-it-key"
-  description = "The security key used to sSH"
-}
-
-variable "key_path" {
-  default = ".app/snipe-it-key.pem"
-  description = "The security key used to sSH"
-}
