@@ -15,7 +15,7 @@ output "default_sg_id" {
 }
 
 output "security_groups_ids" {
-  value = ["${data.aws_security_group.snipeit.id}"]
+  value = ["${aws_security_group.snipeit.id}"]
 }
 
 output "public_route_table" {
