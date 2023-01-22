@@ -5,3 +5,4 @@ resource "aws_instance" "runner" {
     subnet_id = var.subnets_id[0]
     vpc_security_group_ids = var.sec_groups
     key_name = "Kamen"
+    }
