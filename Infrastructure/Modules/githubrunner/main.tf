@@ -4,7 +4,6 @@ resource "aws_instance" "runner" {
     instance_type = var.ec2_instance_type
     subnet_id = var.subnets_id[0]
     vpc_security_group_ids = var.sec_groups
-    key_name = "Kamen.pem"
     
 user_data = <<EOF
 #!/bin/bash
@@ -18,7 +17,6 @@ source ~/.bash_profile
 sudo apt update -y
 sudo apt install nodejs -y
 sudo ln -s /usr/bin/nodejs /usr/local/bin/node
-sudo apt install ansible -y
 sudo -u ubuntu mkdir /home/ubuntu/actions-runner && cd /home/ubuntu/actions-runner
 sudo -u ubuntu curl -o /home/ubuntu/actions-runner-linux-x64-2.299.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.299.1/actions-runner-linux-x64-2.299.1.tar.gz    
 echo "147c14700c6cb997421b9a239c012197f11ea9854cd901ee88ead6fe73a72c74  actions-runner-linux-x64-2.299.1.tar.gz" | shasum -a 256 -c
