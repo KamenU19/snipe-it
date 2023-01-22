@@ -43,3 +43,125 @@ resource "aws_subnet" "private_subnet" {
     Environment = "${var.environment}"
   }
 }
+
+# Routing tables to route traffic for Private Subnet
+resource "aws_route_table" "private" {
+    vpc_id = data.aws_vpc.snipeitvpc.id
+
+    tags = {
+        Name = "${var.environment}-private-route-table"
+        Environment = "${var.environment}"
+    }
+  
+}
+
+
+# Routing tables to route traffic for Public Subnet
+resource "aws_route_table" "public" {
+
+    vpc_id = data.aws_vpc.snipeitvpc.id
+    tags = {
+        Name = "${var.environment}-public-route-table"
+        Environment = "${var.environment}"
+    }
+  
+}
+
+# Route for Internet Gateway
+resource "aws_route" "public_internet_gateway" {
+
+    route_table_id = aws_route_table.public.id
+    destination_cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.ig.id
+  
+}
+
+# Route table associations for both Public & Private Subnets
+resource "aws_route_table_association" "public" {
+    count = length(var.public_subnets_cidr)
+    subnet_id = element(aws_subnet.public_subnet.*.id,  count.index)
+    route_table_id = aws_route_table.public.id
+  
+}
+
+resource "aws_security_group" "snipeit" {
+  name = "snipeit"
+}
+
+#-------- Allow 443 port
+resource "aws_security_group_rule" "public-secure-internet-ingress" {
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = data.aws_security_group.snipeit.id
+}
+
+resource "aws_security_group_rule" "public-secure-internet-egress" {
+  type              = "egress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = data.aws_security_group.snipeit.id
+}
+
+#-----Allow 80 port
+resource "aws_security_group_rule" "public-non-secure-internet-ingress" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = data.aws_security_group.snipeit.id
+}
+
+resource "aws_security_group_rule" "public-non-secure-internet-egress" {
+  type              = "egress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = data.aws_security_group.snipeit.id
+}
+
+#----- allow database 3306 port
+
+resource "aws_security_group_rule" "database-ingress" {
+  type              = "ingress"
+  from_port         = 3306
+  to_port           = 3306
+  protocol          = "tcp"
+  cidr_blocks       = ["10.0.0.0/16"]
+  security_group_id = data.aws_security_group.snipeit.id
+}
+
+resource "aws_security_group_rule" "database-egress" {
+  type              = "egress"
+  from_port         = 3306
+  to_port           = 3306
+  protocol          = "tcp"
+  cidr_blocks       = ["10.0.0.0/16"]
+  security_group_id = data.aws_security_group.snipeit.id
+}
+
+#----- allow home ip
+
+resource "aws_security_group_rule" "ssh-home-ingress" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["37.143.213.101/32"]
+  security_group_id = data.aws_security_group.snipeit.id
+}
+
+resource "aws_security_group_rule" "ssh-home-egress" {
+  type              = "egress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["37.143.213.101/32"]
+  security_group_id = data.aws_security_group.snipeit.id
+}
