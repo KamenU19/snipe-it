@@ -36,6 +36,3 @@ resource "aws_s3_bucket_policy" "state-store" {
   bucket = aws_s3_bucket.state-store.id
   policy = data.aws_iam_policy_document.state-store.json
 }
-
-
-}
