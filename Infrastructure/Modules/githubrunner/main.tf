@@ -4,23 +4,7 @@ resource "aws_instance" "runner" {
     instance_type = var.ec2_instance_type
     subnet_id = var.subnets_id[0]
     vpc_security_group_ids = var.sec_groups
-
-resource "tls_private_key" "this" {
-    algorithm     = "RSA"
-    rsa_bits      = 4096
-}
-
-resource "aws_key_pair" "this" {
-    key_name      = "Kamen"
-    public_key    = tls_private_key.this.public_key_openssh
-
-  provisioner "local-exec" {
-    command = <<-EOT
-      echo "${tls_private_key.this.private_key_pem}" > my-key.pem
-    EOT
-  }
-}
-    
+     
 user_data = <<EOF
 #!/bin/bash
 cd /home/ubuntu
