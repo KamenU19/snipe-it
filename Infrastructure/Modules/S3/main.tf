@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "state-store" {
+resource "aws_s3_bucket" "snipeitterrastate" {
   bucket        = var.bucket-name
   acl           = "private"
   force_destroy = var.force_destroy
@@ -24,7 +24,7 @@ server_side_encryption_configuration {
 }
 
 resource "aws_s3_bucket_public_access_block" "example" {
-  bucket = aws_s3_bucket.state-store.id
+  bucket = aws_s3_bucket.snipeitterrastate.id
 
   block_public_acls       = true
   block_public_policy     = true
@@ -32,7 +32,7 @@ resource "aws_s3_bucket_public_access_block" "example" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_policy" "state-store" {
-  bucket = aws_s3_bucket.state-store.id
-  policy = data.aws_iam_policy_document.state-store.json
+resource "aws_s3_bucket_policy" "snipeitterrastate" {
+  bucket = aws_s3_bucket.snipeitterrastate.id
+  policy = data.aws_iam_policy_document.snipeitterrastate.json
 }
