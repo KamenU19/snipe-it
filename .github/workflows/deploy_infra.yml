@@ -71,6 +71,7 @@ jobs:
         run: terraform plan -no-color 
       
       - name: Terraform Apply
+        uses: dflook/terraform-apply@v1.29.1
         env:
           AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
           AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }}
