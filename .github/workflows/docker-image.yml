@@ -32,12 +32,12 @@ jobs:
        with:
          image: kamencho/snipeit
          args: --file:./app/dockerfiles/Dockerfile
-      - name: upload the test results
+     - name: upload the test results
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: snyk.sarif
-      - name: Push the new image to Docker Hub
-        run: docker push kamencho/snipeit
+     - name: Push the new image to Docker Hub
+       run: docker push kamencho/snipeit
 
    deploy-app:
      needs: build
