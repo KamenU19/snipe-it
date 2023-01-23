@@ -26,7 +26,6 @@ jobs:
        run: docker build -t kamencho/snipeit ./app/dockerfiles --file ./app/dockerfiles/Dockerfile 
      - name: Scan the docker with Snyc
        run: docker scan --login --token ${{ secrets.SNYK_TOKEN }} --accept-license kamencho/snipeit
-       run: docker scan kamencho/snipeit
      - name: Push the new image to Docker Hub
        run: docker push kamencho/snipeit
 
