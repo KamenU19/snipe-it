@@ -49,4 +49,4 @@ jobs:
           EOF
       - name: Run Script to deploy
         run: |
-          cat ./file.sh | ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }}
+          cat ./dockerfiles/file.sh | ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }}
