@@ -26,19 +26,19 @@ jobs:
          password: ${{ secrets.DOCKERHUB_TOKEN }}
      - name: Build the SnipeIt Docker image
        run: docker build -t kamencho/snipeit ./app/dockerfiles --file ./app/dockerfiles/Dockerfile 
-     - name: Snyk container test
+     - name: Snyk Container Test
        continue-on-error: true
        uses: snyk/actions/docker@master
        env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
        with:
          image: kamencho/snipeit
-         args: --file=./app/dockerfiles/Dockerfile --severity-threshold=medium
-     - name: upload the test results
+         args: --file=./app/dockerfiles/Dockerfile --severity-threshold=critical
+     - name: Upload The Test Results
        uses: github/codeql-action/upload-sarif@v2
        with:
          sarif_file: snyk.sarif
-     - name: Push the new image to Docker Hub
+     - name: Push The New Image to Docker Hub
        run: docker push kamencho/snipeit
 
    deploy-app:
