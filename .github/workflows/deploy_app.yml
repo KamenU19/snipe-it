@@ -44,7 +44,7 @@ jobs:
         env:
           MySQLPW:   ${{ secrets.MySQLPW }}
         run: |
-          ssh -i snipe-it-key.pem ubuntu@${{ env.ip_address }} << EOF
+          ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }} << EOF
           sudo sed -i '6s/.*/MYSQL_PASSWORD=${MySQLPW}/g' /home/ubuntu/snipeit/my_env_file
           EOF
       - name: Run Script to deploy
