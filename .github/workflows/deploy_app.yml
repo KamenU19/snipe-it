@@ -35,10 +35,10 @@ jobs:
         run: sudo chown ubuntu:ubuntu /home/ubuntu/Kamen.pem
 
       - name: Copy env_file
-        run: sudo scp -i /home/ubuntu/Kamen.pem ./DeployFiles/docker-compose.yml ubuntu@${{ env.ip_address }}://tmp/docker-compose.yml
+        run: sudo scp -i /home/ubuntu/Kamen.pem ./dockerfiles/docker-compose.yml ubuntu@${{ env.ip_address }}://tmp/docker-compose.yml
       
       - name: Copy env_file
-        run: sudo scp -i /home/ubuntu/Kamen.pem ./DeployFiles/my_env_file ubuntu@${{ env.ip_address }}://tmp/my_env_file
+        run: sudo scp -i /home/ubuntu/Kamen.pem ./dockerfiles/my_env_file ubuntu@${{ env.ip_address }}://tmp/my_env_file
 
       - name: Update mysql password
         env:
