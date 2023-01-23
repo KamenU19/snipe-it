@@ -1,25 +1,63 @@
-# name: Docker Image CI
+name: Docker Image CI
+ on:
+   push:
+     branches: [ "master" ]
+     paths: 
+       - 'app/dockerfiles/**'
+ env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+        AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+        AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }} 
+        AWS_REGION: ${{secrets.AWS_REGION}} 
+ jobs:
+   build:
+     runs-on: ubuntu-latest
 
-# on:
-#   push:
-#     branches: [ "master" ]
-#     paths: 
-#       - 'app/dockerfiles/**'
-#   pull_request:
-#     branches: [ "change-test" ]
+     steps:
+     - uses: actions/checkout@v3
+     - name: Login to Docker Hub
+       uses: docker/login-action@v2
+       with:
+         username: ${{ secrets.DOCKERHUB_USERNAME }}
+         password: ${{ secrets.DOCKERHUB_TOKEN }}
+     - name: Build the SnipeIt Docker image
+       run: docker build -t kamencho/snipeit ./app/dockerfiles --file ./app/dockerfiles/Dockerfile 
+     - name: Push the new image to Docker Hub
+       run: docker scan
+       run: docker push kamencho/snipeit
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+   deploy-app:
+     runs-on: self-hosted
+     continue-on-error: true
+     defaults:
+      run:
+        shell: bash
+        working-directory: ./app
+     steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
 
-#     steps:
-#     - uses: actions/checkout@v3
-#     - name: Login to Docker Hub
-#       uses: docker/login-action@v2
-#       with:
-#         username: ${{ secrets.DOCKERHUB_USERNAME }}
-#         password: ${{ secrets.DOCKERHUB_TOKEN }}
-#     - name: Build the SnipeIt Docker image
-#       run: docker build -t kamencho/snipeit ./app/dockerfiles --file ./app/dockerfiles/Dockerfile 
-#     - name: Push the new image to Docker Hub
-#       run: docker push kamencho/snipeit
+      - name: Get Ip
+        run: echo ip_address=$(aws ec2 describe-instances --region "eu-west-1" --filters Name=tag:Name,Values="SnipeIT Server" --output text --query "Reservations[*].Instances[*].PrivateIpAddress") >> $GITHUB_ENV
+
+      - name: Change permisions 
+        run: sudo chown ubuntu:ubuntu /home/ubuntu/Kamen.pem
+
+      - name: Copy env_file
+        run: sudo scp -i /home/ubuntu/Kamen.pem ./dockerfiles/docker-compose.yml ubuntu@${{ env.ip_address }}://tmp/docker-compose.yml
+      
+      - name: Copy env_file
+        run: sudo scp -i /home/ubuntu/Kamen.pem ./dockerfiles/my_env_file ubuntu@${{ env.ip_address }}://tmp/my_env_file
+
+      - name: Update mysql password
+        env:
+          MySQLPW:   ${{ secrets.MySQLPW }}
+        run: |
+          ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }} << EOF
+          sudo sed -i '6s/.*/MYSQL_PASSWORD=${MySQLPW}/g' /tmp/my_env_file
+          EOF
+      - name: Run Script to deploy
+        run: |
+          cat ./dockerfiles/file.sh | ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }}
