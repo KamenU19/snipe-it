@@ -3,7 +3,7 @@ name: "Deploy the application"
 on:
   push:
     branches:
-      - master
+      - testtest #fake branch to disable the workflow
     paths:
       - 'app/**'
   pull_request:
