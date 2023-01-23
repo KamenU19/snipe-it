@@ -33,7 +33,7 @@ jobs:
          image: kamencho/snipeit
          args: --file=./app/dockerfiles/Dockerfile
      - name: upload the test results
-       uses: github/codeql-action/upload-sarif@v1
+       uses: github/codeql-action/upload-sarif@v2
        with:
          sarif_file: snyk.sarif
      - name: Push the new image to Docker Hub
