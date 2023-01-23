@@ -31,7 +31,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
        with:
          image: kamencho/snipeit
-         args: --file:./app/dockerfiles/Dockerfile
+         args: --file=./app/dockerfiles/Dockerfile
      - name: upload the test results
        uses: github/codeql-action/upload-sarif@v1
        with:
