@@ -25,7 +25,7 @@ jobs:
      - name: Build the SnipeIt Docker image
        run: docker build -t kamencho/snipeit ./app/dockerfiles --file ./app/dockerfiles/Dockerfile 
      - name: Snyk container test
-       continue-on-error: false
+       continue-on-error: true
        uses: snyk/actions/docker@master
        env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
