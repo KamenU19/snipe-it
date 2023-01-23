@@ -24,6 +24,10 @@ jobs:
          password: ${{ secrets.DOCKERHUB_TOKEN }}
      - name: Build the SnipeIt Docker image
        run: docker build -t kamencho/snipeit ./app/dockerfiles --file ./app/dockerfiles/Dockerfile 
+     - name: Login to Docker Hub
+       with:
+         username: ${{ secrets.DOCKERHUB_USERNAME }}
+         password: ${{ secrets.DOCKERHUB_TOKEN }}
      - name: Scan the docker with Snyc
        run: docker scan --accept-license kamencho/snipeit
      - name: Push the new image to Docker Hub
