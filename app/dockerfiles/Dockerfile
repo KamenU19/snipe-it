@@ -10,3 +10,5 @@ CMD ["/final.sh", "-D" ,"FOREGROUND"]
 
 EXPOSE 80
 EXPOSE 443
+
+#trigger tests
