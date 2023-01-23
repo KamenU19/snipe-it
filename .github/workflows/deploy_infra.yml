@@ -91,8 +91,8 @@ jobs:
       - name: Get Ip
         run: echo ip_address=$(aws ec2 describe-instances --region "eu-west-1" --filters Name=tag:Name,Values="SnipeIT Server" --output text --query "Reservations[*].Instances[*].PrivateIpAddress") >> $GITHUB_ENV
 
-      #- name: Run ssh once
-      #  run: ssh-keyscan -H ${{ env.ip_address }} >> ~/.ssh/known_hosts
+      - name: Run ssh once
+        run: ssh-keyscan -H ${{ env.ip_address }} >> ~/.ssh/known_hosts
 
       - name: Change permisions 
         run: sudo chown ubuntu:ubuntu /home/ubuntu/Kamen.pem

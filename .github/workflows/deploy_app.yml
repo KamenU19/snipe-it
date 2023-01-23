@@ -1,0 +1,52 @@
+# JOB TO DEPLOY THE APP
+name: "Deploy the application"
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'app/**'
+  pull_request:
+env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+        AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+        AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }} 
+        AWS_REGION: ${{secrets.AWS_REGION}} 
+
+jobs:
+  
+  deploy-app:
+    runs-on: self-hosted
+    continue-on-error: true
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./app
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+
+      - name: Get Ip
+        run: echo ip_address=$(aws ec2 describe-instances --region "eu-west-1" --filters Name=tag:Name,Values="SnipeIT Server" --output text --query "Reservations[*].Instances[*].PrivateIpAddress") >> $GITHUB_ENV
+
+      - name: Change permisions 
+        run: sudo chown ubuntu:ubuntu /home/ubuntu/Kamen.pem
+
+      - name: Copy env_file
+        run: sudo scp -i /home/ubuntu/Kamen.pem ./DeployFiles/docker-compose.yml ubuntu@${{ env.ip_address }}://tmp/docker-compose.yml
+      
+      - name: Copy env_file
+        run: sudo scp -i /home/ubuntu/Kamen.pem ./DeployFiles/my_env_file ubuntu@${{ env.ip_address }}://tmp/my_env_file
+
+      - name: Update mysql password
+        env:
+          MySQLPW:   ${{ secrets.MySQLPW }}
+        run: |
+          ssh -i snipe-it-key.pem ubuntu@${{ env.ip_address }} << EOF
+          sudo sed -i '6s/.*/MYSQL_PASSWORD=${MySQLPW}/g' /home/ubuntu/snipeit/my_env_file
+          EOF
+      - name: Run Script to deploy
+        run: |
+          cat ./file.sh | ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }}
