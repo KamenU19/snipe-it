@@ -11,6 +11,7 @@ env:
         AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
         AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }} 
         AWS_REGION: ${{secrets.AWS_REGION}} 
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 jobs:
    build:
      runs-on: ubuntu-latest
@@ -24,6 +25,10 @@ jobs:
          password: ${{ secrets.DOCKERHUB_TOKEN }}
      - name: Build the SnipeIt Docker image
        run: docker build -t kamencho/snipeit ./app/dockerfiles --file ./app/dockerfiles/Dockerfile 
+    - uses: actions/checkout@master
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+       
      - name: Scan the docker with Snyc
        run: docker scan --accept-license kamencho/snipeit
      - name: Push the new image to Docker Hub
