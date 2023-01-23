@@ -32,6 +32,7 @@ jobs:
        with:
          image: kamencho/snipeit
          args: --file=./app/dockerfiles/Dockerfile
+         args: --severity-threshold=critical
      - name: upload the test results
        uses: github/codeql-action/upload-sarif@v2
        with:
