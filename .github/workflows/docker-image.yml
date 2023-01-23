@@ -24,10 +24,6 @@ jobs:
          password: ${{ secrets.DOCKERHUB_TOKEN }}
      - name: Build the SnipeIt Docker image
        run: docker build -t kamencho/snipeit ./app/dockerfiles --file ./app/dockerfiles/Dockerfile 
-     - uses: actions/checkout@master
-     - name: Run Snyk to check for vulnerabilities
-       uses: snyk/actions/node@master
-       
      - name: Scan the docker with Snyc
        run: docker scan --accept-license kamencho/snipeit
      - name: Push the new image to Docker Hub
@@ -59,10 +55,10 @@ jobs:
 
       - name: Update mysql password
         env:
-          MySQLPW:   ${{ secrets.MySQLPW }}
+          MYSQLPW:   ${{ secrets.MYSQLPW }}
         run: |
           ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }} << EOF
-          sudo sed -i '6s/.*/MYSQL_PASSWORD=${MySQLPW}/g' /tmp/my_env_file
+          sudo sed -i '6s/.*/MYSQL_PASSWORD=${MYSQLPW}/g' /tmp/my_env_file
           EOF
       - name: Run Script to deploy
         run: |
