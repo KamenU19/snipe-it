@@ -8,4 +8,4 @@ resource "aws_instance" "snipeitserver" {
   key_name = "Kamen"
   }
 
-  # test15
+  # test16
