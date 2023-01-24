@@ -15,6 +15,11 @@ server_side_encryption_configuration {
     enabled = true
   }
 
+  logging {
+     target_bucket = var.target_bucket
+     target_prefix = "log/${var.s3_bucket_name}"
+   }
+
   tags = {
     Name = var.bucket-name
     Description = "This bucket is used for storing terraform state."
@@ -30,10 +35,4 @@ resource "aws_s3_bucket_public_access_block" "example" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
-}
-
-logging {
-     target_bucket = var.target_bucket
-      target_prefix = "log/${var.s3_bucket_name}"
-   }
 }
