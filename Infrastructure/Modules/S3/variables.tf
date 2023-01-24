@@ -20,3 +20,7 @@ variable "force_destroy" {
 variable "target_bucket" {
   default = "s3terraformsnipestate"
 }
+
+variable "s3_bucket_name" {
+  default = "s3terraformsnipestate"
+}
