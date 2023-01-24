@@ -184,9 +184,3 @@ resource "aws_security_group_rule" "ssh-internal-egress" {
   cidr_blocks       = ["10.0.0.0/16"]
   security_group_id = aws_security_group.snipeit.id
 }
-
-resource "aws_security_group" "RDSsecgroup" {
-  vpc_id = data.aws_vpc.snipeitvpc.id
-  name = "snipeit"
-}
-
