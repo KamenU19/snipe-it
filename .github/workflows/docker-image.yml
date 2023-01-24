@@ -66,12 +66,14 @@ jobs:
         run: sudo scp -i /home/ubuntu/Kamen.pem ./dockerfiles/my_env_file ubuntu@${{ env.ip_address }}://tmp/my_env_file
 
       - name: Update mysql password
-        env:
-          MYSQLPW:   ${{ secrets.MYSQLPW }}
+          env:
+          DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 
         run: |
-          ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }} << EOF
-          sudo sed -i '6s/.*/MYSQL_PASSWORD=${{secrets.MYSQLPW}}/' /tmp/my_env_file
-          EOF
+            ssh -i snipe-it-key.pem ubuntu@${{ env.ip_address }} << EOF
+            sudo sed -i '6s/.*/MYSQL_PASSWORD=${{secrets.MYSQLPW}}/' /tmp/my_env_file
+            sudo docker login --username=${DOCKER_LOGIN} --password=${DOCKER_PASSWORD}
+            EOF
       - name: Run Script to deploy
         run: |
           cat ./dockerfiles/file.sh | ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }}
