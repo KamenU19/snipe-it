@@ -14,6 +14,27 @@ env:
         AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }} 
         AWS_REGION: ${{secrets.AWS_REGION}} 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+       security-events: write
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Test with Checkov
+        id: checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: ./Infrastructure/
+          framework: terraform 
+      - name: Upload The Test Results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+         sarif_file: chekov.sarif
+
 # JOB TO DEPLOY THE INFRASTRUCUTURE
   deploy-infrastucture:
     runs-on: ubuntu-latest
