@@ -66,7 +66,7 @@ jobs:
         run: sudo scp -i /home/ubuntu/Kamen.pem ./dockerfiles/my_env_file ubuntu@${{ env.ip_address }}://tmp/my_env_file
 
       - name: Update mysql password
-          env:
+        env:
           DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 
         run: |
