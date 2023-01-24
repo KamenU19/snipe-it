@@ -16,3 +16,7 @@ variable "environment" {
 variable "force_destroy" {
   default = false
 }
+
+variable "target_bucket" {
+  default = "s3terraformsnipestate"
+}
