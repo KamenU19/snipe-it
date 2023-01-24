@@ -31,13 +31,10 @@ jobs:
         with:
           directory: ./Infrastructure/
           framework: terraform 
-      - name: Upload The Test Results
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-         sarif_file: chekov.sarif
 
 # JOB TO DEPLOY THE INFRASTRUCUTURE
   deploy-infrastucture:
+    needs: ChekovScan
     runs-on: ubuntu-latest
     continue-on-error: true
     env:
