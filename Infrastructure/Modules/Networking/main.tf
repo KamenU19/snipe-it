@@ -184,3 +184,57 @@ resource "aws_security_group_rule" "ssh-internal-egress" {
   cidr_blocks       = ["10.0.0.0/16"]
   security_group_id = aws_security_group.snipeit.id
 }
+
+resource "aws_security_group_rule" "wazuh ingress" {
+  type              = "ingress"
+  from_port         = 1514
+  to_port           = 1514
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.snipeit.id
+}
+
+resource "aws_security_group_rule" "wazuh-egress" {
+  type              = "egress"
+  from_port         = 1514
+  to_port           = 1514
+  protocol          = "tcp"
+  cidr_blocks       = ["10.0.0.0/0"]
+  security_group_id = aws_security_group.snipeit.id
+}
+
+resource "aws_security_group_rule" "wazuh ingress" {
+  type              = "ingress"
+  from_port         = 1515
+  to_port           = 1515
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.snipeit.id
+}
+
+resource "aws_security_group_rule" "wazuh-egress" {
+  type              = "egress"
+  from_port         = 1515
+  to_port           = 1515
+  protocol          = "tcp"
+  cidr_blocks       = ["10.0.0.0/0"]
+  security_group_id = aws_security_group.snipeit.id
+}
+
+resource "aws_security_group_rule" "wazuh ingress" {
+  type              = "ingress"
+  from_port         = 55000
+  to_port           = 55000
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.snipeit.id
+}
+
+resource "aws_security_group_rule" "wazuh-egress" {
+  type              = "egress"
+  from_port         = 55000
+  to_port           = 55000
+  protocol          = "tcp"
+  cidr_blocks       = ["10.0.0.0/0"]
+  security_group_id = aws_security_group.snipeit.id
+}
