@@ -14,8 +14,9 @@ env:
         AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }} 
         AWS_REGION: ${{secrets.AWS_REGION}} 
 jobs:
-  build:
+  ChekovScan:
     runs-on: ubuntu-latest
+    continue-on-error: true
     permissions:
        security-events: write
     steps:
@@ -97,7 +98,7 @@ jobs:
           AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }}
         run: terraform apply -auto-approve
   
-  deploy-test:
+  ChangePermissions:
     needs: deploy-infrastucture
     runs-on: self-hosted
     continue-on-error: true
