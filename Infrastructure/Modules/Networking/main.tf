@@ -203,7 +203,7 @@ resource "aws_security_group_rule" "wazuh-egress" {
   security_group_id = aws_security_group.snipeit.id
 }
 
-resource "aws_security_group_rule" "wazuh ingress" {
+resource "aws_security_group_rule" "wazuh ingress2" {
   type              = "ingress"
   from_port         = 1515
   to_port           = 1515
@@ -212,7 +212,7 @@ resource "aws_security_group_rule" "wazuh ingress" {
   security_group_id = aws_security_group.snipeit.id
 }
 
-resource "aws_security_group_rule" "wazuh-egress" {
+resource "aws_security_group_rule" "wazuh-egress2" {
   type              = "egress"
   from_port         = 1515
   to_port           = 1515
@@ -221,7 +221,7 @@ resource "aws_security_group_rule" "wazuh-egress" {
   security_group_id = aws_security_group.snipeit.id
 }
 
-resource "aws_security_group_rule" "wazuh ingress" {
+resource "aws_security_group_rule" "wazuh ingress3" {
   type              = "ingress"
   from_port         = 55000
   to_port           = 55000
@@ -230,7 +230,7 @@ resource "aws_security_group_rule" "wazuh ingress" {
   security_group_id = aws_security_group.snipeit.id
 }
 
-resource "aws_security_group_rule" "wazuh-egress" {
+resource "aws_security_group_rule" "wazuh-egress3" {
   type              = "egress"
   from_port         = 55000
   to_port           = 55000
