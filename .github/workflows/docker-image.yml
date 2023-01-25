@@ -77,3 +77,5 @@ jobs:
       - name: Run Script to deploy
         run: |
           cat ./dockerfiles/file.sh | ssh -i /home/ubuntu/Kamen.pem ubuntu@${{ env.ip_address }}
+
+##test
