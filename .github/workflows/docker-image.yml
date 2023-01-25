@@ -42,7 +42,7 @@ jobs:
        run: docker push kamencho/snipeit
 
    deploy-app:
-     needs: build
+     needs: buildcontainer
      runs-on: self-hosted
      continue-on-error: true
      defaults:
